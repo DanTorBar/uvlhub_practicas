@@ -5,12 +5,18 @@ on:
       branches:
         - main
     pull_request:
+      types: [closed]
       branches:
         - main
+    workflow_run:
+      workflows: ["Run Tests"]
+      types: [completed]
+
 
 jobs:
 
   deploy:
+    if: github.event.pull_request.merged == true
     name: Deploy to Render
     runs-on: ubuntu-latest
     steps:
